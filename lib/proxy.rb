@@ -3,6 +3,9 @@ require 'debugger'
 require_relative 'model/find.rb'
 
 class Proxy < Rack::Proxy
+  NOT_FOUND_BASE_URL = 'http://henteko07.com'
+  MAVEN_METADATA_FILE_NAME = 'maven-metadata.xml'
+
   def initialize(app)
     @app = app
   end
@@ -12,20 +15,19 @@ class Proxy < Rack::Proxy
 
     project_path = ''
     env['PATH_INFO'].split('/').each do |s|
-      if /^\d+(\.\d+)?/ =~ s
-        break
-      end
+      break if /^\d+(\.\d+)?/ =~ s or MAVEN_METADATA_FILE_NAME == s
       project_path += s + '/' if s != ''
     end
-    pp project_path
 
     config = Find.find(project_path)
-    return env if config.nil?
+    url = config.nil? ? NOT_FOUND_BASE_URL : config['url'] 
+    uri = URI(url)
 
-    host = config['host']
-    path = config['path']
+    host = uri.host
+    port = uri.port
+    path = uri.path
 
-    env['HTTP_HOST'] = host unless host.nil? 
+    env['HTTP_HOST'] = host + ':' + port.to_s unless host.nil? 
     env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
 
     return env
