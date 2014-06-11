@@ -1,33 +1,29 @@
 require 'rack-proxy'
 require 'debugger'
+require_relative 'model/find.rb'
 
 class Proxy < Rack::Proxy
   def initialize(app)
     @app = app
-    @config = YAML.load_file('settings.yaml')
   end
 
   def rewrite_env(env)
     path = env['SCRIPT_NAME'] + env['PATH_INFO']
 
-    array = []
+    project_path = ''
     env['PATH_INFO'].split('/').each do |s|
       if /^\d+(\.\d+)?/ =~ s
         break
       end
-      array.push(s) if s != ''
+      project_path += s + '/' if s != ''
     end
-    pp array
+    pp project_path
 
-    tmp_config = @config;
-    array.each do |key|
-      tmp_config = tmp_config[key] unless tmp_config[key].nil? 
-    end
-    pp tmp_config['host']
-    host = tmp_config['host']
-    path = tmp_config['path']
+    config = Find.find(project_path)
+    return env if config.nil?
 
-    pp env
+    host = config['host']
+    path = config['path']
 
     env['HTTP_HOST'] = host unless host.nil? 
     env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
