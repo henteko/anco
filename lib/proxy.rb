@@ -8,7 +8,6 @@ class Proxy < Rack::Proxy
   end
 
   def rewrite_env(env)
-    pp env
     path = env['SCRIPT_NAME'] + env['PATH_INFO']
 
     array = []
@@ -24,23 +23,15 @@ class Proxy < Rack::Proxy
     array.each do |key|
       tmp_config = tmp_config[key] unless tmp_config[key].nil? 
     end
-    pp tmp_config['url']
-    url = tmp_config['url']
+    pp tmp_config['host']
+    host = tmp_config['host']
+    path = tmp_config['path']
 
-    #path << "?#{env['QUERY_STRING']}" unless env['QUERY_STRING'].empty?
-
-    env['HTTP_HOST'] = url unless url.nil? 
-    env['REQUEST_URI'] = url + path unless url.nil?
     pp env
+
+    env['HTTP_HOST'] = host unless host.nil? 
+    env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
+
     return env
   end
-
-  def rewrite_response(triplet)
-    status, headers, body = triplet
-    puts "############################"
-    #headers['X-Hoge'] = 'Hoge'
-
-    triplet
-  end
-
 end
