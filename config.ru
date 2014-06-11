@@ -1,10 +1,13 @@
 require 'debugger'
 require 'yaml'
+require_relative 'lib/proxy.rb'
 
 BASE = 'http://repo1.maven.org/maven2'
 config = YAML.load_file('settings.yaml')
 
+use Proxy
 app = Proc.new do |env|
+  pp env
   path = env['SCRIPT_NAME'] + env['PATH_INFO']
 
   array = []
