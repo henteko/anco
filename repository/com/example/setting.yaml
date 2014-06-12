@@ -1,0 +1,6 @@
+name: 'example'
+url: 'http://example.com'
+homepage: 'http://example.com'
+authors: 'example authors'
+summary: 'example summary'
+source: 'https://github.com/example/test'
