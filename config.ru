@@ -1,7 +1,17 @@
-require_relative 'lib/proxy.rb'
+require './lib/proxy.rb'
+require './rack/dummy_app.rb'
+require './rack/not_found_app.rb'
+require './rack/api_app.rb'
 
-use Proxy
-app = Proc.new do |env|
+map '/repository' do 
+  use Proxy
+  run DummyApp.new
 end
 
-run app
+map '/404' do
+  run NotFoundApp.new
+end
+
+map '/api' do
+  run ApiApp.new
+end

@@ -1,9 +1,8 @@
 require 'rack-proxy'
 require 'debugger'
-require_relative 'model/find.rb'
+require './lib/model/find.rb'
 
 class Proxy < Rack::Proxy
-  NOT_FOUND_BASE_URL = 'http://henteko07.com'
   MAVEN_METADATA_FILE_NAME = 'maven-metadata.xml'
 
   def initialize(app)
@@ -20,8 +19,14 @@ class Proxy < Rack::Proxy
     end
 
     config = Find.find(project_path)
-    url = config.nil? ? NOT_FOUND_BASE_URL : config['url'] 
-    uri = URI(url)
+
+    env['SCRIPT_NAME'] = ''
+    if config.nil?
+      env['PATH_INFO'] = '/404'
+      return env
+    end
+
+    uri = URI(config['url'])
 
     host = uri.host
     port = uri.port
