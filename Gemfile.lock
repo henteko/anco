@@ -11,6 +11,7 @@ GEM
     rack (1.5.2)
     rack-proxy (0.5.14)
       rack
+    rack-ssl-enforcer (0.2.7)
 
 PLATFORMS
   ruby
@@ -19,3 +20,4 @@ DEPENDENCIES
   debugger
   rack
   rack-proxy
+  rack-ssl-enforcer

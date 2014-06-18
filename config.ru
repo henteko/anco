@@ -1,7 +1,11 @@
+require 'rack/ssl-enforcer'
+
 require './lib/proxy.rb'
 require './rack/dummy_app.rb'
 require './rack/not_found_app.rb'
 require './rack/api_app.rb'
+
+use Rack::SslEnforcer
 
 map '/repository' do 
   use Proxy
