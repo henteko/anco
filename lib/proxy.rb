@@ -34,6 +34,7 @@ class Proxy < Rack::Proxy
 
     env['HTTP_HOST'] = host + ':' + port.to_s unless host.nil? 
     env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
+    env["rack.ssl_verify_none"] = true
 
     return env
   end

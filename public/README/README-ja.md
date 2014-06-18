@@ -1,5 +1,5 @@
 # Anco
-[英語](http://anco.herokuapp.com/public/index.html)
+[英語](https://anco.herokuapp.com/public/index.html)
 
 ## Anco?
 AncoはAndroidライブラリを集めたプロジェクトです  
@@ -11,7 +11,7 @@ build.gradleを以下の様に編集して下さい
 ```
 // 登録するurlは以下だけ
 maven {
-  url 'http://anco.herokuapp.com/repository'
+  url 'https://anco.herokuapp.com/repository'
 }
 
 // 参照したいライブラリを記述

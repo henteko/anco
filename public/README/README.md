@@ -1,5 +1,5 @@
 # Anco
-[日本語](http://anco.herokuapp.com/public/index-ja.html)
+[日本語](https://anco.herokuapp.com/public/index-ja.html)
 
 ## What's Anco?
 Anco is Android Library Collection.
@@ -8,7 +8,7 @@ Anco is Android Library Collection.
 Edit buid.gradle
 ```
 maven {
-  url 'http://anco.herokuapp.com/repository'
+  url 'https://anco.herokuapp.com/repository'
 }
 
 // ather library
