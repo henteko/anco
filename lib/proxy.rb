@@ -1,41 +1,25 @@
 require 'rack-proxy'
 require 'debugger'
 require './lib/model/find.rb'
+require './lib/proxy_util.rb'
 
 class Proxy < Rack::Proxy
-  MAVEN_METADATA_FILE_NAME = 'maven-metadata.xml'
-
   def initialize(app)
     @app = app
   end
 
   def rewrite_env(env)
-    path = env['SCRIPT_NAME'] + env['PATH_INFO']
+    proxy_util = ProxyUtil.new(env)
 
-    project_path = ''
-    env['PATH_INFO'].split('/').each do |s|
-      break if /^\d+(\.\d+)?/ =~ s or MAVEN_METADATA_FILE_NAME == s
-      project_path += s + '/' if s != ''
-    end
-
+    project_path = proxy_util.generate_project_path
     config = Find.find(project_path)
 
-    env['SCRIPT_NAME'] = ''
-    if config.nil?
-      env['PATH_INFO'] = '/404'
-      return env
-    end
+    return proxy_util.get_notfound_env if config.nil?
 
     uri = URI(config['url'])
+    return proxy_util.get_notfound_env if uri.nil?
 
-    host = uri.host
-    port = uri.port
-    path = uri.path
-
-    env['HTTP_HOST'] = host + ':' + port.to_s unless host.nil? 
-    env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
-    env["rack.ssl_verify_none"] = true
-
-    return env
+    result_env = proxy_util.get_result_env(uri)
+    result_env
   end
 end
