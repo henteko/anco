@@ -127,5 +127,39 @@ describe ProxyUtil do
       result_env = proxy_util.get_result_env(uri)
       expect(result_env).to eq(collect_env)
     end
+
+    it "url last /" do
+      uri = URI('http://repo1.maven.org/maven2/')
+      env = {
+        'PATH_INFO' => '/com/example/gradle/0.0.6/gradle-0.0.6.jar'
+      }
+      collect_env = {
+        'HTTP_HOST' => 'repo1.maven.org:80',
+        'PATH_INFO' => '/maven2/com/example/gradle/0.0.6/gradle-0.0.6.jar',
+        'rack.ssl_verify_none' => true
+      }
+
+      proxy_util = ProxyUtil.new(env)
+
+      result_env = proxy_util.get_result_env(uri)
+      expect(result_env).to eq(collect_env)
+    end
+
+    it "url paths" do
+      uri = URI('http://repo1.maven.org/maven2/repository/')
+      env = {
+        'PATH_INFO' => '/com/example/gradle/0.0.6/gradle-0.0.6.jar'
+      }
+      collect_env = {
+        'HTTP_HOST' => 'repo1.maven.org:80',
+        'PATH_INFO' => '/maven2/repository/com/example/gradle/0.0.6/gradle-0.0.6.jar',
+        'rack.ssl_verify_none' => true
+      }
+
+      proxy_util = ProxyUtil.new(env)
+
+      result_env = proxy_util.get_result_env(uri)
+      expect(result_env).to eq(collect_env)
+    end
   end
 end

@@ -17,8 +17,9 @@ class Proxy < Rack::Proxy
     return proxy_util.get_notfound_env if config.nil?
 
     uri = URI(config['url'])
-    result_env = proxy_util.get_result_env(uri)
+    return proxy_util.get_notfound_env if uri.nil?
 
+    result_env = proxy_util.get_result_env(uri)
     result_env
   end
 end

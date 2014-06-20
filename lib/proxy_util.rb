@@ -38,7 +38,7 @@ class ProxyUtil
 
     host = uri.host
     port = uri.port
-    path = uri.path
+    path = uri.path.gsub(/(\/)*$/, '')
 
     env['HTTP_HOST'] = host + ':' + port.to_s unless host.nil?
     env['PATH_INFO'] = path + env['PATH_INFO'] unless path.nil?
