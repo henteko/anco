@@ -22,19 +22,9 @@ dependencies {
 
 ## repositoryを追加する
 * このプロジェクトをfork & cloneしてください
-* ディレクトリを作成してください
-  * repository/com/your_domain/...
-* setting.yamlをそのディレクトリの最下層に作成してください
-
-setting.yamlには以下を記述ください
-```
-name: 'example'
-url: 'http://example.com'
-homepage: 'http://example.com'
-authors: 'example authors'
-summary: 'example summary'
-source: 'https://github.com/example/test'
-```
+* 以下のコマンドを実行してください
+ * $ cd anco/ && ./tool/register
+ * 質問に従って情報を入力してください
 * あとはPull Requestするだけ!!!!!!!!!
 
 ## License

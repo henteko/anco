@@ -19,17 +19,9 @@ dependencies {
 
 ## Add repository
 * fork and clone this project
-* create dir
-  * repository/com/your_domain/...
-* create setting.yaml
-```
-name: 'example'
-url: 'http://example.com'
-homepage: 'http://example.com'
-authors: 'example authors'
-summary: 'example summary'
-source: 'https://github.com/example/test'
-```
+* run command
+ * $ cd anco/ && ./tool/register
+ * input info
 * Pull Request!!!!!!!!!
 
 ## License
