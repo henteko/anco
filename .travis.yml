@@ -1,7 +1,6 @@
 language: ruby
 rvm:
 - 2.0.0
-- 1.9.3
 script: bundle exec rake spec
 deploy:
   provider: heroku
@@ -10,4 +9,4 @@ deploy:
   app: anco
   on:
     repo: henteko/anco
-    branch: work/travis
+    branch: master 

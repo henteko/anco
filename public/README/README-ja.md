@@ -1,4 +1,5 @@
 # Anco
+[![Build Status](https://travis-ci.org/henteko/anco.svg?branch=master)](https://travis-ci.org/henteko/anco)
 [英語](https://anco.herokuapp.com/public/index.html)
 
 ## Anco?
