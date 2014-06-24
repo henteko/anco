@@ -2,9 +2,11 @@
 require 'yaml'
 require 'fileutils'
 
+SETTING_YAML_FILE_NAME = "setting.yaml"
+
 def create_setting_yaml(path, setting)
   FileUtils.mkdir_p(path)
-  open(path + "/setting.yaml","w") do |f|
+  open(path + "/" + SETTING_YAML_FILE_NAME,"w") do |f|
     YAML.dump(setting,f)
   end
 end
@@ -44,7 +46,7 @@ summary : #{summary}
 source  : #{source_url}
 EOS
 result = get_input('register ok?(input yes): ', true)
-exit unless result == 'yes'
+exit unless result == 'yes' || result == 'y'
 
 setting = {
   'name' => lib_name,
@@ -59,6 +61,6 @@ path = 'repository/' + package.gsub(/\./, '/')
 create_setting_yaml(path, setting)
 
 print(<<"EOS")
-Success #{lib_name} register!
+Create #{path + "/" + SETTING_YAML_FILE_NAME}
 Please Pull Request!!
 EOS
