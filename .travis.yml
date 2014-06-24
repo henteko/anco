@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+- 2.0.0
+script: bundle exec rake spec
+deploy:
+  provider: heroku
+  api_key:
+    secure: jyBRf1Q3uDXbcIBHgLY9CGNzWogXYLkRCKyUu7o6joD7MpA2SmoBH1RSn+o8APAWup1lrKwiR+qq7f1aM2rLBVvtbvrwUBAQeBEuvjUNDOyJRH7U0ib4SbU0/QezUTP7cyqprDqrxhc8O+3NXNmg54QGUKFy0h/8OSBVH2UNDCQ=
+  app: anco
+  on:
+    repo: henteko/anco
+    branch: master 

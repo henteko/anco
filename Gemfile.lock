@@ -13,6 +13,7 @@ GEM
     rack-proxy (0.5.14)
       rack
     rack-ssl-enforcer (0.2.7)
+    rake (10.1.0)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -34,4 +35,5 @@ DEPENDENCIES
   rack
   rack-proxy
   rack-ssl-enforcer
+  rake
   rspec
