@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 require 'yaml'
 require 'fileutils'
+require './tool/connection_test.rb'
 
 SETTING_YAML_FILE_NAME = "setting.yaml"
 
@@ -59,8 +60,20 @@ setting = {
 path = 'repository/' + package.gsub(/\./, '/')
 
 create_setting_yaml(path, setting)
+puts "Create #{path + '/' + SETTING_YAML_FILE_NAME}"
 
+# connection test
+puts 'Test your lib...'
+connection_test = ConnectionTest.new(package)
+result = connection_test.run
+
+if result.nil?
+  puts 'Connection Error: not access your lib url'
+  puts 'Please fix lib url'
+  exit
+end
+
+puts result
 print(<<"EOS")
-Create #{path + "/" + SETTING_YAML_FILE_NAME}
 Please Pull Request!!
 EOS
