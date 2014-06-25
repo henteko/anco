@@ -49,6 +49,18 @@ EOS
 result = get_input('register ok?(input yes): ', true)
 exit unless result == 'yes' || result == 'y'
 
+# connection test
+puts 'Test your lib...'
+connection_test = ConnectionTest.new(package)
+result = connection_test.run
+
+if result.nil?
+  puts 'Connection Error: not access your lib url'
+  puts 'Please fix lib package and url'
+  exit
+end
+puts result
+
 setting = {
   'name' => lib_name,
   'url'  => base_url,
@@ -60,20 +72,7 @@ setting = {
 path = 'repository/' + package.gsub(/\./, '/')
 
 create_setting_yaml(path, setting)
-puts "Create #{path + '/' + SETTING_YAML_FILE_NAME}"
-
-# connection test
-puts 'Test your lib...'
-connection_test = ConnectionTest.new(package)
-result = connection_test.run
-
-if result.nil?
-  puts 'Connection Error: not access your lib url'
-  puts 'Please fix lib url'
-  exit
-end
-
-puts result
 print(<<"EOS")
+Create #{path + '/' + SETTING_YAML_FILE_NAME}
 Please Pull Request!!
 EOS
